@@ -1,7 +1,7 @@
 <?php
 
 declare (strict_types=1);
-namespace ApiClients\Client\GitHubAE\Schema\Operation\Actions\ListRepoSecrets\Response\Applicationjson;
+namespace ApiClients\Client\GitHubAE\Schema\Operation\Actions\ListRepoOrganizationSecrets\Response\Applicationjson;
 
 use ApiClients\Client\GitHubAE\Error as ErrorSchemas;
 use ApiClients\Client\GitHubAE\Hydrator;
