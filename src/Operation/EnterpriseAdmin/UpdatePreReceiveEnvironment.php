@@ -1,13 +1,13 @@
 <?php
 
 declare (strict_types=1);
-namespace ApiClients\Client\GitHubAE\Operation\EnterpriseAdmin;
+namespace ApiClients\Client\Github\Operation\EnterpriseAdmin;
 
-use ApiClients\Client\GitHubAE\Error as ErrorSchemas;
-use ApiClients\Client\GitHubAE\Hydrator;
-use ApiClients\Client\GitHubAE\Operation;
-use ApiClients\Client\GitHubAE\Schema;
-use ApiClients\Client\GitHubAE\WebHook;
+use ApiClients\Client\Github\Error as ErrorSchemas;
+use ApiClients\Client\Github\Hydrator;
+use ApiClients\Client\Github\Operation;
+use ApiClients\Client\Github\Schema;
+use ApiClients\Client\Github\WebHook;
 final class UpdatePreReceiveEnvironment
 {
     public const OPERATION_ID = 'enterprise-admin/update-pre-receive-environment';
@@ -26,7 +26,7 @@ final class UpdatePreReceiveEnvironment
         $this->responseSchemaValidator = $responseSchemaValidator;
         $this->hydrator = $hydrator;
     }
-    function createRequest(array $data = array()) : \Psr\Http\Message\RequestInterface
+    public function createRequest(array $data = array()) : \Psr\Http\Message\RequestInterface
     {
         $this->requestSchemaValidator->validate($data, \cebe\openapi\Reader::readFromJson(Schema\EnterpriseAdmin\UpdatePreReceiveEnvironment\Request\Applicationjson::SCHEMA_JSON, \cebe\openapi\spec\Schema::class));
         return new \RingCentral\Psr7\Request(self::METHOD, \str_replace(array('{pre_receive_environment_id}'), array($this->preReceiveEnvironmentId), self::PATH), array('Content-Type' => 'application/json'), json_encode($data));
@@ -34,7 +34,7 @@ final class UpdatePreReceiveEnvironment
     /**
      * @return Schema\PreReceiveEnvironment
      */
-    function createResponse(\Psr\Http\Message\ResponseInterface $response) : Schema\PreReceiveEnvironment
+    public function createResponse(\Psr\Http\Message\ResponseInterface $response) : Schema\PreReceiveEnvironment
     {
         [$contentType] = explode(';', $response->getHeaderLine('Content-Type'));
         $body = json_decode($response->getBody()->getContents(), true);

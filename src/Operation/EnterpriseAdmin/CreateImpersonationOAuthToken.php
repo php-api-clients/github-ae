@@ -1,13 +1,13 @@
 <?php
 
 declare (strict_types=1);
-namespace ApiClients\Client\GitHubAE\Operation\EnterpriseAdmin;
+namespace ApiClients\Client\Github\Operation\EnterpriseAdmin;
 
-use ApiClients\Client\GitHubAE\Error as ErrorSchemas;
-use ApiClients\Client\GitHubAE\Hydrator;
-use ApiClients\Client\GitHubAE\Operation;
-use ApiClients\Client\GitHubAE\Schema;
-use ApiClients\Client\GitHubAE\WebHook;
+use ApiClients\Client\Github\Error as ErrorSchemas;
+use ApiClients\Client\Github\Hydrator;
+use ApiClients\Client\Github\Operation;
+use ApiClients\Client\Github\Schema;
+use ApiClients\Client\Github\WebHook;
 final class CreateImpersonationOAuthToken
 {
     public const OPERATION_ID = 'enterprise-admin/create-impersonation-o-auth-token';
@@ -26,7 +26,7 @@ final class CreateImpersonationOAuthToken
         $this->responseSchemaValidator = $responseSchemaValidator;
         $this->hydrator = $hydrator;
     }
-    function createRequest(array $data = array()) : \Psr\Http\Message\RequestInterface
+    public function createRequest(array $data = array()) : \Psr\Http\Message\RequestInterface
     {
         $this->requestSchemaValidator->validate($data, \cebe\openapi\Reader::readFromJson(Schema\EnterpriseAdmin\CreateImpersonationOAuthToken\Request\Applicationjson::SCHEMA_JSON, \cebe\openapi\spec\Schema::class));
         return new \RingCentral\Psr7\Request(self::METHOD, \str_replace(array('{username}'), array($this->username), self::PATH), array('Content-Type' => 'application/json'), json_encode($data));
@@ -34,21 +34,21 @@ final class CreateImpersonationOAuthToken
     /**
      * @return Schema\Authorization
      */
-    function createResponse(\Psr\Http\Message\ResponseInterface $response) : Schema\Authorization
+    public function createResponse(\Psr\Http\Message\ResponseInterface $response) : Schema\Authorization
     {
         [$contentType] = explode(';', $response->getHeaderLine('Content-Type'));
         $body = json_decode($response->getBody()->getContents(), true);
         switch ($response->getStatusCode()) {
-            /**Response when creating a new impersonation OAuth token**/
-            case 201:
+            /**Response when getting an existing impersonation OAuth token**/
+            case 200:
                 switch ($contentType) {
                     case 'application/json':
                         $this->responseSchemaValidator->validate($body, \cebe\openapi\Reader::readFromJson(Schema\Authorization::SCHEMA_JSON, '\\cebe\\openapi\\spec\\Schema'));
                         return $this->hydrator->hydrateObject(Schema\Authorization::class, $body);
                 }
                 break;
-            /**Response when getting an existing impersonation OAuth token**/
-            case 200:
+            /**Response when creating a new impersonation OAuth token**/
+            case 201:
                 switch ($contentType) {
                     case 'application/json':
                         $this->responseSchemaValidator->validate($body, \cebe\openapi\Reader::readFromJson(Schema\Authorization::SCHEMA_JSON, '\\cebe\\openapi\\spec\\Schema'));
